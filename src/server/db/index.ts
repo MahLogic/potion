@@ -1,9 +1,9 @@
 import { createClient, type Client } from "@libsql/client";
-import { drizzle } from "drizzle-orm/postgres-js";
+import { drizzle } from "drizzle-orm/neon-http";
 
-import { env } from "~/env";
+// import { env } from "~/env";
 import * as schema from "./schema";
-
+import { env } from "process";
 /**
  * Cache the database connection in development. This avoids creating a new connection on every HMR
  * update.
@@ -13,7 +13,7 @@ const globalForDb = globalThis as unknown as {
 };
 
 export const client =
-  globalForDb.client ?? createClient({ url: env.DATABASE_URL });
+  globalForDb.client ?? createClient({ url: env.DATABASE_URL! });
 if (env.NODE_ENV !== "production") globalForDb.client = client;
 
 export const db = drizzle(client, { schema });
