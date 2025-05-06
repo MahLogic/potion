@@ -1,19 +1,18 @@
-import { createClient, type Client } from "@libsql/client";
 import { drizzle } from "drizzle-orm/neon-http";
-
-// import { env } from "~/env";
+import type { NeonHttpClient } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { env } from "~/env";
 import * as schema from "./schema";
-import { env } from "process";
+
 /**
  * Cache the database connection in development. This avoids creating a new connection on every HMR
  * update.
  */
 const globalForDb = globalThis as unknown as {
-  client: Client | undefined;
+  client: NeonHttpClient | undefined;
 };
 
-export const client =
-  globalForDb.client ?? createClient({ url: env.DATABASE_URL! });
+export const client = globalForDb.client ?? neon(env.DATABASE_URL);
 if (env.NODE_ENV !== "production") globalForDb.client = client;
 
 export const db = drizzle(client, { schema });
