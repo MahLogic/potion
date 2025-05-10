@@ -14,6 +14,7 @@ import {
   BookOpen,
   Check,
   ChevronsDown,
+  ChevronsUp,
   CircleUserRound,
   Layers2,
   LogOut,
@@ -30,6 +31,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { useTheme } from "next-themes";
+import { useState } from "react";
 
 interface OrgDropdownProps {
   variants: {
@@ -57,8 +59,9 @@ interface OrgDropdownProps {
 }
 function OrgDropdown({ variants, isCollapsed }: OrgDropdownProps) {
   const { theme, setTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu modal={false} open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger className="w-full">
         <Button
           variant="ghost"
@@ -75,7 +78,11 @@ function OrgDropdown({ variants, isCollapsed }: OrgDropdownProps) {
             {!isCollapsed && (
               <>
                 <p className="text-sm font-medium">Kelly Mahlangu</p>
-                <ChevronsDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
+                {isOpen ? (
+                  <ChevronsUp className="ml-auto h-4 w-4 text-muted-foreground/50" />
+                ) : (
+                  <ChevronsDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
+                )}
               </>
             )}
           </motion.li>

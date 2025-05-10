@@ -4,7 +4,7 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import { ThemeProvider } from "~/components/provider/theme-provider";
+import { ThemeProvider } from "~/components/providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "MahPotion – Open Source Alternative to Notin",
