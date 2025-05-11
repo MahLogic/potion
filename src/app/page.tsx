@@ -1,22 +1,17 @@
 "use client";
 
-import Hero from "~/components/landing/hero";
+import PageEditor from "~/components/app/page-editor";
+import { SessionNavBar } from "~/components/ui/sidebar";
 
-export default function Home() {
+function page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
-      <Hero
-        title={"Your Modular Workspace, Built by Devs for Everyone."}
-        description={
-          "An open-source, privacy-first Notion alternative. Customizable, local-first, and extendable."
-        }
-        mockupImage={{
-          alt: "AI Platform Dashboard",
-          width: 1248,
-          height: 765,
-          src: "https://www.launchuicomponents.com/app-light.png",
-        }}
-      />
-    </main>
+    <div className="flex h-screen w-screen flex-row">
+      <SessionNavBar />
+      <main className="flex h-screen grow justify-center overflow-auto pt-5">
+        <PageEditor />
+      </main>
+    </div>
   );
 }
+
+export default page;
