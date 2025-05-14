@@ -13,6 +13,12 @@ import {
   Code,
 } from "lucide-react";
 import { cn } from "~/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 type BlockType =
   | "paragraph"
@@ -32,7 +38,7 @@ interface Block {
 
 export const LineEditor = () => {
   const [blocks, setBlocks] = useState<Block[]>([
-    { id: "1", type: "paragraph", content: "", isFocused: true },
+    { id: "1", type: "heading-1", content: "Hi Im Kelly", isFocused: true },
   ]);
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [commandMenuPosition, setCommandMenuPosition] = useState({
@@ -41,6 +47,7 @@ export const LineEditor = () => {
   });
   const [activeBlockId, setActiveBlockId] = useState("1");
   const blockRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [Editing, setEditing] = useState<Block>();
 
   // Generate a unique ID for new blocks
   const generateId = () => Math.random().toString(36).substring(2, 9);
@@ -193,7 +200,10 @@ export const LineEditor = () => {
     switch (block.type) {
       case "heading-1":
         return (
-          <h1 className={cn(commonProps.className, "text-3xl font-bold")}>
+          <h1
+            className={cn(commonProps.className, "text-3xl font-bold")}
+            onClick={}
+          >
             {block.content}
           </h1>
         );
@@ -287,7 +297,7 @@ export const LineEditor = () => {
   return (
     <div className="p-4 min-h-[300px]">
       {/* Toolbar */}
-      {/* <div className="flex items-center mb-4 p-1 border-b">
+      <div className="flex items-center mb-4 p-1 border-b">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center text-sm text-gray-600 hover:bg-gray-100 rounded px-2 py-1">
             <span>Format</span>
@@ -343,7 +353,7 @@ export const LineEditor = () => {
             <ImageIcon className="h-4 w-4" />
           </button>
         </div>
-      </div> */}
+      </div>
 
       {/* Blocks */}
       <div className="space-y-1">
@@ -351,7 +361,7 @@ export const LineEditor = () => {
           <div key={block.id} className="relative group">
             {renderBlock(block)}
             <div className="absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+              <div className="w-2 h-2 rounded-full bg-red-600"></div>
             </div>
           </div>
         ))}
