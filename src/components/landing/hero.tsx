@@ -32,7 +32,7 @@ const Hero = ({
   },
   secondaryCta = {
     text: "GitHub",
-    href: "https://github.com/your-repo",
+    href: "https://github.com/MahLogic/potion",
     icon: <FaGithub className="mr-2 h-4 w-4" />,
   },
   mockupImage,

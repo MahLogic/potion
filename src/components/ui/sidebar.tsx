@@ -6,19 +6,31 @@ import { motion } from "framer-motion";
 import { Badge } from "~/components/ui/badge";
 import {
   Blocks,
+  BookDashedIcon,
+  CalendarDaysIcon,
   ChevronsDown,
   ChevronsUpDown,
+  CircleHelpIcon,
   FileClock,
+  FlaskConical,
   GraduationCap,
+  HelpCircle,
+  HomeIcon,
   Layout,
   LayoutDashboard,
   LogOut,
+  MailboxIcon,
   MessageSquareText,
   MessagesSquare,
   Plus,
+  PlusIcon,
+  ScrollTextIcon,
+  SearchIcon,
+  Send,
   Settings,
   UserCircle,
   UserCog,
+  UserPlusIcon,
   UserSearch,
 } from "lucide-react";
 import Image from "next/image";
@@ -37,6 +49,8 @@ import {
 import { Separator } from "~/components/ui/separator";
 import { Skeleton } from "~/components/ui/skeleton";
 import { OrgDropdown } from "../app/org-dropdown";
+import { TextSeparator } from "../common/text-seporator";
+import CommandSearchMenu from "../app/command-search-menu";
 
 const sidebarVariants = {
   open: {
@@ -52,7 +66,7 @@ const contentVariants = {
   closed: { display: "block", opacity: 1 },
 };
 
-const variants = {
+export const variants = {
   open: {
     x: 0,
     opacity: 1,
@@ -87,7 +101,9 @@ export function SessionNavBar() {
   const pathname = usePathname();
   return (
     <motion.div
-      className={cn("sidebar left-0 z-40 h-full shrink-0 border-r fixed")}
+      className={cn(
+        "sidebar left-0 z-40 h-full shrink-0 border-r fixed bg-sidebar"
+      )}
       initial={isCollapsed ? "closed" : "open"}
       animate={isCollapsed ? "closed" : "open"}
       variants={sidebarVariants}
@@ -104,84 +120,16 @@ export function SessionNavBar() {
             <div className="flex h-[54px] w-full shrink-0  border-b p-2">
               <div className=" mt-[1.5px] flex w-full">
                 <OrgDropdown variants={variants} isCollapsed={isCollapsed} />
-                {/* <DropdownMenu modal={false}>
-                  <DropdownMenuTrigger className="w-full" asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="flex w-fit items-center gap-2  px-2"
-                    >
-                      <Avatar className="size-4">
-                        <AvatarFallback>KM</AvatarFallback>
-                      </Avatar>
-                      <motion.li
-                        variants={variants}
-                        className="flex w-full items-center gap-2"
-                      >
-                        {!isCollapsed && (
-                          <>
-                            <p className="text-sm font-medium">
-                              Kelly Mahlangu's Potion
-                            </p>
-                            <ChevronsDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
-                          </>
-                        )}
-                      </motion.li>
-                    </Button>
-                  </DropdownMenuTrigger>
-
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem
-                      asChild
-                      className="flex items-center gap-2"
-                    >
-                      <Link href="/settings/members">
-                        <UserCog className="h-4 w-4" /> Manage members
-                      </Link>
-                    </DropdownMenuItem>{" "}
-                    <DropdownMenuItem
-                      asChild
-                      className="flex items-center gap-2"
-                    >
-                      <Link href="/settings/integrations">
-                        <Blocks className="h-4 w-4" /> Integrations
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/select-org"
-                        className="flex items-center gap-2"
-                      >
-                        <Plus className="h-4 w-4" />
-                        Create or join an organization
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu> */}
               </div>
             </div>
 
             <div className=" flex h-full w-full flex-col">
-              <div className="flex grow flex-col gap-4">
-                <ScrollArea className="h-16 grow p-2">
+              <div className="flex grow flex-col">
+                <div className="p-2">
                   <div className={cn("flex w-full flex-col gap-1")}>
+                    <CommandSearchMenu isCollapsed={isCollapsed} />
                     <Link
-                      href="/dashboard"
-                      className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-                        pathname?.includes("dashboard") &&
-                          "bg-muted text-blue-600"
-                      )}
-                    >
-                      <LayoutDashboard className="h-4 w-4" />{" "}
-                      <motion.li variants={variants}>
-                        {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Dashboard</p>
-                        )}
-                      </motion.li>
-                    </Link>
-                    <Link
-                      href="/reports"
+                      href="#"
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
 
@@ -189,203 +137,117 @@ export function SessionNavBar() {
                           "bg-muted text-blue-600"
                       )}
                     >
-                      <FileClock className="h-4 w-4" />{" "}
+                      <FlaskConical className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
                           <div className="flex items-center gap-2">
-                            <p className="ml-2 text-sm font-medium">Reports</p>
+                            <p className="ml-2 text-sm font-medium">
+                              AI Potion
+                            </p>
                           </div>
                         )}
                       </motion.li>
                     </Link>
                     <Link
-                      href="/chat"
+                      href="#"
                       className={cn(
-                        "flex h-8 flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
-                        pathname?.includes("chat") && "bg-muted text-blue-600"
+                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
+
+                        pathname?.includes("reports") &&
+                          "bg-muted text-blue-600"
                       )}
                     >
-                      <MessagesSquare className="h-4 w-4" />
+                      <HomeIcon className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <div className="ml-2 flex items-center  gap-2">
-                            <p className="text-sm font-medium">Chat</p>
-                            <Badge
-                              className={cn(
-                                "flex h-fit w-fit items-center gap-1.5 rounded border-none bg-blue-50 px-1.5 text-blue-600 dark:bg-blue-700 dark:text-blue-300"
-                              )}
-                              variant="outline"
-                            >
-                              BETA
-                            </Badge>
+                          <div className="flex items-center gap-2">
+                            <p className="ml-2 text-sm font-medium">Home</p>
                           </div>
                         )}
                       </motion.li>
                     </Link>
-                    <Separator className="w-full" />
+                  </div>
+                </div>
+                <TextSeparator
+                  isCollapsed={isCollapsed}
+                  text={"Private"}
+                  buttonText={"New"}
+                />
+                <ScrollArea className="grow p-2">
+                  <div className={cn("flex w-full flex-col gap-1")}>
                     <Link
-                      href="/deals"
+                      href="#"
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-
-                        pathname?.includes("deals") && "bg-muted text-blue-600"
-                      )}
-                    >
-                      <Layout className="h-4 w-4" />{" "}
-                      <motion.li variants={variants}>
-                        {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Deals</p>
-                        )}
-                      </motion.li>
-                    </Link>
-                    <Link
-                      href="/accounts"
-                      className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-
-                        pathname?.includes("accounts") &&
+                        pathname?.includes("dashboard") &&
                           "bg-muted text-blue-600"
                       )}
                     >
-                      <UserCircle className="h-4 w-4" />{" "}
-                      <motion.li variants={variants}>
-                        {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Accounts</p>
-                        )}
-                      </motion.li>
-                    </Link>
-                    <Link
-                      href="/competitors"
-                      className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-
-                        pathname?.includes("competitors") &&
-                          "bg-muted text-blue-600"
-                      )}
-                    >
-                      <UserSearch className="h-4 w-4" />
+                      <ScrollTextIcon className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
                           <p className="ml-2 text-sm font-medium">
-                            Competitors
-                          </p>
-                        )}
-                      </motion.li>
-                    </Link>
-                    <Separator className="w-full" />
-                    <Link
-                      href="/library/knowledge"
-                      className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-
-                        pathname?.includes("library") &&
-                          "bg-muted text-blue-600"
-                      )}
-                    >
-                      <GraduationCap className="h-4 w-4" />{" "}
-                      <motion.li variants={variants}>
-                        {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">
-                            Knowledge Base
-                          </p>
-                        )}
-                      </motion.li>
-                    </Link>
-                    <Link
-                      href="/feedback"
-                      className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-                        pathname?.includes("feedback") &&
-                          "bg-muted text-blue-600"
-                      )}
-                    >
-                      <MessageSquareText className="h-4 w-4" />{" "}
-                      <motion.li variants={variants}>
-                        {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Feedback</p>
-                        )}
-                      </motion.li>
-                    </Link>
-                    <Link
-                      href="/review"
-                      className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-
-                        pathname?.includes("review") && "bg-muted text-blue-600"
-                      )}
-                    >
-                      <FileClock className="h-4 w-4" />{" "}
-                      <motion.li variants={variants}>
-                        {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">
-                            Document Review
+                            Client List
                           </p>
                         )}
                       </motion.li>
                     </Link>
                   </div>
                 </ScrollArea>
-              </div>
-              <div className="flex flex-col p-2">
-                <Link
-                  href="/settings/integrations"
-                  className="mt-auto flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary"
-                >
-                  <Settings className="h-4 w-4 shrink-0" />{" "}
-                  <motion.li variants={variants}>
-                    {!isCollapsed && (
-                      <p className="ml-2 text-sm font-medium"> Settings</p>
-                    )}
-                  </motion.li>
-                </Link>
-                <div>
-                  <DropdownMenu modal={false}>
-                    <DropdownMenuTrigger className="w-full">
-                      <div className="flex h-8 w-full flex-row items-center gap-2 rounded-md px-2 py-1.5  transition hover:bg-muted hover:text-primary">
-                        <Avatar className="size-4">
-                          <AvatarFallback>A</AvatarFallback>
-                        </Avatar>
-                        <motion.li
-                          variants={variants}
-                          className="flex w-full items-center gap-2"
-                        >
-                          {!isCollapsed && (
-                            <>
-                              <p className="text-sm font-medium">Account</p>
-                              <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
-                            </>
-                          )}
-                        </motion.li>
-                      </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent sideOffset={5}>
-                      <div className="flex flex-row items-center gap-2 p-2">
-                        <Avatar className="size-6">
-                          <AvatarFallback>AL</AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col text-left">
-                          <span className="text-sm font-medium">
-                            {`Andrew Luo`}
-                          </span>
-                          <span className="line-clamp-1 text-xs text-muted-foreground">
-                            {`andrew@usehindsight.com`}
-                          </span>
+                <Separator className="w-full" />
+                <div className="p-2">
+                  <div className={cn("flex w-full flex-col gap-1")}>
+                    <Link
+                      href="#"
+                      className={cn(
+                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
+                        pathname?.includes("dashboard") &&
+                          "bg-muted text-blue-600"
+                      )}
+                    >
+                      <BookDashedIcon className="h-4 w-4" />{" "}
+                      <motion.li variants={variants}>
+                        {!isCollapsed && (
+                          <p className="ml-2 text-sm font-medium">Templates</p>
+                        )}
+                      </motion.li>
+                    </Link>
+                    <Link
+                      href="#"
+                      className={cn(
+                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
+
+                        pathname?.includes("reports") &&
+                          "bg-muted text-blue-600"
+                      )}
+                    >
+                      <UserPlusIcon className="h-4 w-4" />{" "}
+                      <motion.li variants={variants}>
+                        {!isCollapsed && (
+                          <div className="flex items-center gap-2">
+                            <p className="ml-2 text-sm font-medium">
+                              Invite members
+                            </p>
+                          </div>
+                        )}
+                      </motion.li>
+                    </Link>
+                  </div>
+                  <div className="flex items-center justify-between px-2 py-1.5 w-full max-w-md mx-auto">
+                    <motion.div variants={variants}>
+                      {!isCollapsed && (
+                        <div className="flex gap-4" aria-readonly>
+                          <Link href="#">
+                            <MailboxIcon className="h-4 w-4" />
+                          </Link>
+                          <Link href="#">
+                            <Send className="h-4 w-4" />
+                          </Link>
                         </div>
-                      </div>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        asChild
-                        className="flex items-center gap-2"
-                      >
-                        <Link href="/settings/profile">
-                          <UserCircle className="h-4 w-4" /> Profile
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="flex items-center gap-2">
-                        <LogOut className="h-4 w-4" /> Sign out
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                      )}
+                    </motion.div>
+                    <HelpCircle className="h-4 w-4" />
+                  </div>
                 </div>
               </div>
             </div>

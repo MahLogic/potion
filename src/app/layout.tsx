@@ -2,9 +2,9 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-
+import { PostHogProvider } from "~/components/providers/posthog-provider"
 import { TRPCReactProvider } from "~/trpc/react";
-import { ThemeProvider } from "~/components/provider/theme-provider";
+import { ThemeProvider } from "~/components/providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "MahPotion – Open Source Alternative to Notin",
@@ -62,6 +62,7 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable}`}>
       <body>
         <TRPCReactProvider>
+        <PostHogProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -70,6 +71,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+        </PostHogProvider>
         </TRPCReactProvider>
       </body>
     </html>
